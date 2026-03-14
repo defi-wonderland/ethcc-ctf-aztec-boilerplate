@@ -1,0 +1,107 @@
+# Aztec CTF Boilerplate
+
+Minimal Aztec CTF starter with:
+
+- a shared `FlagEmitter` contract
+- one example challenge contract: `easy_flag`
+- local tests against an Aztec local network
+- testnet scripts for account deployment and solving
+
+## Layout
+
+```text
+src/nr/flag_emitter/   Shared flag registry and capture checks
+src/nr/easy_flag/      Example challenge contract
+src/ts/solve.test.ts   Local integration test for the challenge
+scripts/deploy_account.ts
+scripts/solve.ts
+scripts/shared.ts
+```
+
+## Build
+
+Compile Noir contracts and regenerate TypeScript artifacts:
+
+```bash
+yarn ccc
+```
+
+`yarn ccc` runs the full contract build pipeline:
+
+- `yarn clean`
+- `yarn compile`
+- `yarn codegen`
+
+## Environment
+
+Copy `.env.example` to `.env`.
+
+- `SPONSORED_FPC_SALT`: Sponsored FPC salt used by the testnet scripts
+- `ACCOUNT_SECRET_KEY`: private key for your CTF account on testnet
+- `ACCOUNT_SALT` `(*)`: account salt for deploying multiple Schnorr accounts. _Use `ZERO` for the scoring account._
+- `TESTNET_NODE_URL` `(*)`: testnet RPC URL used by scripts. Defaults to Aztec public testnet RPC.
+- `LOCAL_NETWORK_NODE_URL` `(*)`: local network RPC URL used by tests. Defaults to `http://localhost:8080`.
+
+> _`(*)` means optional._
+
+## Local Testing
+
+Start an Aztec local network in another terminal:
+
+```bash
+aztec start --sandbox
+```
+
+Run both Noir and TypeScript tests:
+
+```bash
+yarn test
+```
+
+Run only the Noir tests:
+
+```bash
+yarn test:nr
+```
+
+Or only the TypeScript tests:
+
+```bash
+yarn test:js
+```
+
+## Testnet Scripts
+
+Deploy your Schnorr account:
+
+```bash
+yarn deploy-account
+```
+
+Run the example solve script:
+
+```bash
+yarn solve
+```
+
+The shared script helpers automatically:
+
+- create the embedded wallet
+- derive the player account from `.env`
+- register the Sponsored FPC
+- expose the common `FlagEmitter` address
+
+## Notes For New Challenges
+
+When adding a challenge:
+
+1. Add the Noir contract under `src/nr/`
+2. Regenerate artifacts with `yarn ccc`
+3. Add a local integration test in `src/ts/`
+4. Add a dedicated solve script under `scripts/`
+
+Keep common script logic in `scripts/shared.ts`; keep per-challenge logic inside each solve script.
+
+## License
+
+MIT. See `LICENSE`.
