@@ -24,20 +24,23 @@ describe("EasyFlagCapture", () => {
     [player] = await registerInitialLocalNetworkAccountsInWallet(wallet);
 
     // Deploy a fresh FlagEmitter and whitelist the challenge for local testing.
-    ({ contract: flagEmitter } = await FlagEmitterContract.deploy(
+    const deployedFlagEmitter = await FlagEmitterContract.deploy(
       wallet,
       player,
-    ).send({ from: player }));
-    ({ contract: challenge } = await EasyFlagCaptureContract.deploy(
+    ).send({ from: player });
+    flagEmitter = deployedFlagEmitter.contract;
+
+    const deployedChallenge = await EasyFlagCaptureContract.deploy(
       wallet,
       flagEmitter.address,
-    ).send({ from: player }));
+    ).send({ from: player });
+    challenge = deployedChallenge.contract;
     await flagEmitter.methods
       .set_challenge(challenge.address)
       .send({ from: player });
   });
 
-  it("capture the flag", async () => {
+  it("captures the flag", async () => {
     await challenge.methods.capture_flag().send({ from: player });
 
     expect(

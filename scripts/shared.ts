@@ -77,7 +77,7 @@ export async function isChallengeCaptured(
   wallet: Wallet,
   challengeAddress: AztecAddress,
   player: AztecAddress,
-) {
+): Promise<boolean> {
   const flagEmitter = FlagEmitterContract.at(FLAG_EMITTER_ADDRESS, wallet);
   const { result } = await flagEmitter.methods
     .is_captured(challengeAddress, player)
@@ -96,13 +96,11 @@ export function getSponsoredFpcSalt() {
   }
 }
 
-export const SPONSORED_FPC_SALT = getSponsoredFpcSalt();
-
 export async function registerSponsoredFPC(wallet: EmbeddedWallet) {
   const instance = await getContractInstanceFromInstantiationParams(
     SponsoredFPCContract.artifact,
     {
-      salt: SPONSORED_FPC_SALT,
+      salt: getSponsoredFpcSalt(),
     },
   );
 

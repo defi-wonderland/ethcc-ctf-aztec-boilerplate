@@ -11,16 +11,23 @@ import { SponsoredFeePaymentMethod } from "@aztec/aztec.js/fee";
 
 import { TESTNET_GAS_SETTINGS, createPlayerContext } from "./shared.js";
 
-const { account, sponsoredFpcAddress } = await createPlayerContext();
+async function main() {
+  const { account, sponsoredFpcAddress } = await createPlayerContext();
 
-const address = account.address;
-console.log(`Deploying account ${address.toString()} ...`);
+  const address = account.address;
+  console.log(`Deploying account ${address.toString()} ...`);
 
-const paymentMethod = new SponsoredFeePaymentMethod(sponsoredFpcAddress);
-const deployMethod = await account.getDeployMethod();
-await deployMethod.send({
-  from: AztecAddress.ZERO,
-  fee: { paymentMethod, gasSettings: TESTNET_GAS_SETTINGS },
+  const paymentMethod = new SponsoredFeePaymentMethod(sponsoredFpcAddress);
+  const deployMethod = await account.getDeployMethod();
+  await deployMethod.send({
+    from: AztecAddress.ZERO,
+    fee: { paymentMethod, gasSettings: TESTNET_GAS_SETTINGS },
+  });
+
+  console.log(`Deployed account ${address.toString()}`);
+}
+
+await main().catch((error: unknown) => {
+  console.error("Failed to deploy account:", error);
+  process.exitCode = 1;
 });
-
-console.log(`Deployed account ${address.toString()}`);
