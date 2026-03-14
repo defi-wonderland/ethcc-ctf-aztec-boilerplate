@@ -10,6 +10,7 @@
  */
 import { Fr } from "@aztec/aztec.js/fields";
 import { SponsoredFeePaymentMethod } from "@aztec/aztec.js/fee";
+import { AztecAddress } from "@aztec/aztec.js/addresses";
 import { getContractInstanceFromInstantiationParams } from "@aztec/stdlib/contract";
 
 import {
@@ -22,7 +23,6 @@ import {
   createPlayerContext,
   isChallengeCaptured,
 } from "./shared.js";
-import { AztecAddress } from "@aztec/stdlib/aztec-address";
 
 async function main() {
   const { wallet, player, sponsoredFpcAddress } = await createPlayerContext();

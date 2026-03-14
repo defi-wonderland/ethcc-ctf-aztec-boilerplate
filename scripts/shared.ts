@@ -17,11 +17,24 @@ export interface WalletContextOptions {
   proverEnabled?: boolean;
 }
 
+export interface WalletContext {
+  wallet: EmbeddedWallet;
+  node: ReturnType<typeof createAztecNodeClient>;
+}
+
+export interface PlayerContext extends WalletContext {
+  account: Awaited<ReturnType<EmbeddedWallet["createSchnorrAccount"]>>;
+  player: AztecAddress;
+  sponsoredFpcAddress: AztecAddress;
+}
+
 export const TESTNET_NODE_URL =
   process.env.TESTNET_NODE_URL ?? "https://rpc.testnet.aztec-labs.com/";
 export const TESTNET_PXE_DATA_DIRECTORY = "pxe-testnet";
 
-export async function createWalletContext(opts: WalletContextOptions = {}) {
+export async function createWalletContext(
+  opts: WalletContextOptions = {},
+): Promise<WalletContext> {
   const node = createAztecNodeClient(opts.nodeUrl ?? TESTNET_NODE_URL);
   await waitForNode(node);
   const wallet = await EmbeddedWallet.create(node, {
@@ -33,13 +46,13 @@ export async function createWalletContext(opts: WalletContextOptions = {}) {
   return { wallet, node };
 }
 
-export function getSecretKey() {
+export function getSecretKey(): Fr {
   const secretKey = process.env.ACCOUNT_SECRET_KEY;
   if (!secretKey) throw new Error("ACCOUNT_SECRET_KEY is not set");
   return Fr.fromHexString(secretKey);
 }
 
-export function getWalletSalt() {
+export function getWalletSalt(): Fr {
   const salt = process.env.ACCOUNT_SALT?.trim();
   if (!salt || salt.toUpperCase() === "ZERO") {
     return Fr.ZERO;
@@ -52,7 +65,9 @@ export function getWalletSalt() {
   }
 }
 
-export async function createPlayerContext(opts: WalletContextOptions = {}) {
+export async function createPlayerContext(
+  opts: WalletContextOptions = {},
+): Promise<PlayerContext> {
   const { wallet, node } = await createWalletContext(opts);
   const account = await wallet.createSchnorrAccount(
     getSecretKey(),
@@ -85,7 +100,7 @@ export async function isChallengeCaptured(
   return result;
 }
 
-export function getSponsoredFpcSalt() {
+export function getSponsoredFpcSalt(): Fr {
   const salt = process.env.SPONSORED_FPC_SALT?.trim();
   if (!salt) throw new Error("SPONSORED_FPC_SALT is not set");
 
@@ -96,7 +111,9 @@ export function getSponsoredFpcSalt() {
   }
 }
 
-export async function registerSponsoredFPC(wallet: EmbeddedWallet) {
+export async function registerSponsoredFPC(
+  wallet: EmbeddedWallet,
+): Promise<AztecAddress> {
   const instance = await getContractInstanceFromInstantiationParams(
     SponsoredFPCContract.artifact,
     {
