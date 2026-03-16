@@ -1,7 +1,7 @@
 {
   "name": "aztec-ctf-boilerplate",
   "version": "4.1.0-rc.2",
-  "repository": "https://github.com/defi-wonderland/aztec-boilerplate.git",
+  "repository": "https://github.com/defi-wonderland/aztec-ctf-boilerplate.git",
   "author": "Wonderland",
   "license": "MIT",
   "type": "module",
