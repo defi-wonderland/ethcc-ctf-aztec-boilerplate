@@ -21,13 +21,13 @@ The recommended way is the official install script. It pins the exact version us
 
 ```bash
 VERSION=$(node -p "require('./package.json').config.aztecVersion") \
-  bash -i <(curl -s https://install.aztec.network)
+  bash -i <(curl -sL https://install.aztec.network)
 ```
 
 Or install a specific version directly:
 
 ```bash
-VERSION=4.1.0-rc.2 bash -i <(curl -s https://install.aztec.network)
+VERSION=4.1.0-rc.2 bash -i <(curl -sL https://install.aztec.network)
 ```
 
 After installation, verify the tools are on your `PATH`:
