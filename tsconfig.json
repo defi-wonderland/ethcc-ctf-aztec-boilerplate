@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["esnext", "es2017.object"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "inlineSourceMap": true,
+    "importHelpers": true,
+    "incremental": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src/**/*", "scripts/**/*.ts", "vitest.config.ts"],
+  "exclude": ["node_modules"]
+}
