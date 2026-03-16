@@ -6,6 +6,7 @@ import { registerInitialLocalNetworkAccountsInWallet } from "@aztec/wallets/test
 
 import { EasyFlagCaptureContract } from "../artifacts/EasyFlagCapture.js";
 import { FlagEmitterContract } from "../artifacts/FlagEmitter.js";
+import { Fr } from "@aztec/aztec.js/fields";
 
 describe("EasyFlagCapture", () => {
   let wallet: EmbeddedWallet;
@@ -36,7 +37,7 @@ describe("EasyFlagCapture", () => {
     ).send({ from: player });
     challenge = deployedChallenge.contract;
     await flagEmitter.methods
-      .set_challenge(challenge.address)
+      .set_challenge(challenge.address, fieldCompressedString("easy_flag"))
       .send({ from: player });
   });
 
@@ -50,3 +51,13 @@ describe("EasyFlagCapture", () => {
     ).toBe(true);
   });
 });
+
+/** Encodes a <=31-char ASCII string into the FieldCompressedString shape. */
+export function fieldCompressedString(s: string): { value: Fr } {
+  if (s.length > 31) {
+    throw new Error(`Challenge name too long (max 31 chars): "${s}"`);
+  }
+  const bytes = Buffer.alloc(32);
+  Buffer.from(s, "ascii").copy(bytes, 1);
+  return { value: Fr.fromBuffer(bytes) };
+}

@@ -4,6 +4,7 @@
  * Prerequisites:
  *   1. yarn ccc            — compile contracts and generate artifacts
  *   2. yarn deploy-account — deploy your account on testnet (once only)
+ *      (non-deployed accounts will revert with 'Assertion failed: Failed to get a note')
  *
  * Usage:
  *   yarn solve
@@ -47,6 +48,7 @@ async function main() {
   console.log(`player    = ${player.toString()}`);
   console.log(`challenge = ${challengeAddress.toString()}`);
   console.log(`emitter   = ${FLAG_EMITTER_ADDRESS.toString()}`);
+  console.log(`easy flag = ${challengeAddress.toString()}`);
 
   const paymentMethod = new SponsoredFeePaymentMethod(sponsoredFpcAddress);
 

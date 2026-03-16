@@ -3,6 +3,8 @@ use flag_emitter::FlagEmitter;
 
 use aztec::{protocol::address::AztecAddress, test::helpers::test_environment::TestEnvironment};
 
+use compressed_string::FieldCompressedString;
+
 unconstrained fn setup() -> (TestEnvironment, AztecAddress, AztecAddress, AztecAddress) {
     let mut env = TestEnvironment::new();
 
@@ -20,7 +22,13 @@ unconstrained fn setup() -> (TestEnvironment, AztecAddress, AztecAddress, AztecA
     let challenge_address =
         env.deploy("EasyFlagCapture").with_public_initializer(owner, challenge_initializer);
 
-    env.call_public(owner, flag_emitter.set_challenge(challenge_address));
+    env.call_public(
+        owner,
+        flag_emitter.set_challenge(
+            challenge_address,
+            FieldCompressedString::from_string("easy_flag0000000000000000000000"),
+        ),
+    );
 
     (env, challenge_address, flag_emitter_address, player)
 }
