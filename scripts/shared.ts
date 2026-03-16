@@ -85,7 +85,7 @@ export async function createPlayerContext(
 
 // Same address across all challenges on this network.
 export const FLAG_EMITTER_ADDRESS = AztecAddress.fromString(
-  "0x1fa8dff990393a728244a33e5f6de833dbed75025975ccafed4fd9e43fd44953",
+  "0x002dffbe7db234662a82b11b507403a73831acc076281db3c1d86ef12e321597",
 );
 
 export async function isChallengeCaptured(

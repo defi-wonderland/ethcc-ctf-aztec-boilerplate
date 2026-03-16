@@ -9,18 +9,11 @@ unconstrained fn setup() -> (TestEnvironment, AztecAddress, AztecAddress, AztecA
     let owner = env.create_light_account();
     let player = env.create_light_account();
 
-    let flag_emitter_initializer = FlagEmitter::interface().constructor(owner);
-    let flag_emitter_address = env.deploy("@flag_emitter/FlagEmitter").with_public_initializer(
-        owner,
-        flag_emitter_initializer,
-    );
-    let flag_emitter = FlagEmitter::at(flag_emitter_address);
+    let flag_emitter_address = env.deploy("@flag_emitter/FlagEmitter").without_initializer();
 
     let challenge_initializer = EasyFlagCapture::interface().constructor(flag_emitter_address);
     let challenge_address =
         env.deploy("EasyFlagCapture").with_public_initializer(owner, challenge_initializer);
-
-    env.call_public(owner, flag_emitter.set_challenge(challenge_address));
 
     (env, challenge_address, flag_emitter_address, player)
 }

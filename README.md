@@ -7,6 +7,41 @@ Minimal Aztec CTF starter with:
 - local tests against an Aztec local network
 - testnet scripts for account deployment and solving
 
+## Prerequisites
+
+### System requirements
+
+- **Node.js** `>=22.0.0`
+- **Yarn** `>=1.22.0`
+- **Aztec CLI** — installs `aztec`, `nargo`, and all related tooling
+
+### Install the Aztec CLI
+
+The recommended way is the official install script. It pins the exact version used by this repo (defined in `package.json` under `config.aztecVersion`):
+
+```bash
+VERSION=$(node -p "require('./package.json').config.aztecVersion") \
+  bash -i <(curl -sL https://install.aztec.network)
+```
+
+Or install a specific version directly:
+
+```bash
+VERSION=4.1.0-rc.2 bash -i <(curl -sL https://install.aztec.network)
+```
+
+After installation, verify the tools are on your `PATH`:
+
+```bash
+aztec --version
+```
+
+### Install JS dependencies
+
+```bash
+yarn install
+```
+
 ## Layout
 
 ```text
@@ -46,13 +81,19 @@ Copy `.env.example` to `.env`.
 
 ## Local Testing
 
-Start an Aztec local network in another terminal:
+### 1. Start the local network
+
+In a separate terminal, start the Aztec sandbox. This spins up a local Aztec node, sequencer, and PXE on `http://localhost:8080`:
 
 ```bash
-aztec start --sandbox
+aztec start --local-network
 ```
 
-Run both Noir and TypeScript tests:
+Wait until you see `Aztec Server listening on port 8080` (or similar) before running tests.
+
+### 2. Run the tests
+
+Run both Noir unit tests and TypeScript integration tests:
 
 ```bash
 yarn test
@@ -64,10 +105,16 @@ Run only the Noir tests:
 yarn test:nr
 ```
 
-Or only the TypeScript tests:
+Run only the TypeScript integration tests (against the local network):
 
 ```bash
 yarn test:js
+```
+
+The TypeScript tests connect to `http://localhost:8080` by default. Override via the `LOCAL_NETWORK_NODE_URL` environment variable if your sandbox is running elsewhere:
+
+```bash
+LOCAL_NETWORK_NODE_URL=http://localhost:9090 yarn test:js
 ```
 
 ## Testnet Scripts
