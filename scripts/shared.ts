@@ -52,26 +52,13 @@ export function getSecretKey(): Fr {
   return Fr.fromHexString(secretKey);
 }
 
-export function getWalletSalt(): Fr {
-  const salt = process.env.ACCOUNT_SALT?.trim();
-  if (!salt || salt.toUpperCase() === "ZERO") {
-    return Fr.ZERO;
-  }
-
-  try {
-    return Fr.fromHexString(salt);
-  } catch {
-    throw new Error("ACCOUNT_SALT is invalid");
-  }
-}
-
 export async function createPlayerContext(
   opts: WalletContextOptions = {},
 ): Promise<PlayerContext> {
   const { wallet, node } = await createWalletContext(opts);
   const account = await wallet.createSchnorrAccount(
     getSecretKey(),
-    getWalletSalt(),
+    Fr.ZERO,
   );
   const sponsoredFpcAddress = await registerSponsoredFPC(wallet);
   return {
