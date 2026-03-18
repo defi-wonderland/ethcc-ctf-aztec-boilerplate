@@ -1,4 +1,4 @@
-# Aztec CTF Boilerplate
+# EthCC CTF Aztec Boilerplate
 
 Minimal Aztec CTF starter with:
 
