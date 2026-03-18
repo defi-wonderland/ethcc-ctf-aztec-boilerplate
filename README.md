@@ -11,23 +11,23 @@ Minimal Aztec CTF starter with:
 
 ### System requirements
 
-- **Node.js** `>=22.0.0`
+- **Node.js** `24` (use [nvm](https://github.com/nvm-sh/nvm) to manage versions)
 - **Yarn** `>=1.22.0`
-- **Aztec CLI** — installs `aztec`, `nargo`, and all related tooling
+- **Aztec CLI** — installs `aztec`, `aztec-wallet`, `aztec-up`, and all related tooling
 
 ### Install the Aztec CLI
 
 The recommended way is the official install script. It pins the exact version used by this repo (defined in `package.json` under `config.aztecVersion`):
 
 ```bash
-VERSION=$(node -p "require('./package.json').config.aztecVersion") \
-  bash -i <(curl -sL https://install.aztec.network)
+VERSION=$(node -p "require('./package.json').config.aztecVersion") && \
+  bash -i <(curl -sL "https://install.aztec.network/${VERSION}")
 ```
 
 Or install a specific version directly:
 
 ```bash
-VERSION=4.1.0-nightly.20260318 bash -i <(curl -sL https://install.aztec.network)
+bash -i <(curl -sL https://install.aztec.network/4.1.0-nightly.20260318)
 ```
 
 After installation, verify the tools are on your `PATH`:
