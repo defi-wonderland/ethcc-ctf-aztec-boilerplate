@@ -38,10 +38,10 @@ describe("EasyFlagCapture", () => {
   it("captures the flag", async () => {
     await challenge.methods.capture_flag().send({ from: player });
 
-    expect(
-      await flagEmitter.methods
-        .is_captured(challenge.address, player)
-        .simulate({ from: player }),
-    ).toBe(true);
+    const { result } = await flagEmitter.methods
+      .is_captured(challenge.address, player)
+      .simulate({ from: player });
+
+    expect(result).toBe(true);
   });
 });

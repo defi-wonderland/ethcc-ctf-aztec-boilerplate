@@ -27,7 +27,7 @@ VERSION=$(node -p "require('./package.json').config.aztecVersion") \
 Or install a specific version directly:
 
 ```bash
-VERSION=0.0.1-commit.d0fcfb7f bash -i <(curl -sL https://install.aztec.network)
+VERSION=4.1.0-nightly.20260318 bash -i <(curl -sL https://install.aztec.network)
 ```
 
 After installation, verify the tools are on your `PATH`:

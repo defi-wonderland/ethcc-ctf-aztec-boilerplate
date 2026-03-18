@@ -1,6 +1,6 @@
 {
   "name": "aztec-ctf-boilerplate",
-  "version": "0.0.1-commit.d0fcfb7f",
+  "version": "4.1.0-nightly.20260318",
   "repository": "https://github.com/defi-wonderland/aztec-ctf-boilerplate.git",
   "author": "Wonderland",
   "license": "MIT",
@@ -18,13 +18,13 @@
     "solve": "tsx scripts/solve.ts"
   },
   "dependencies": {
-    "@aztec/accounts": "0.0.1-commit.d0fcfb7f",
-    "@aztec/aztec.js": "0.0.1-commit.d0fcfb7f",
-    "@aztec/entrypoints": "0.0.1-commit.d0fcfb7f",
-    "@aztec/noir-contracts.js": "0.0.1-commit.d0fcfb7f",
-    "@aztec/pxe": "0.0.1-commit.d0fcfb7f",
-    "@aztec/stdlib": "0.0.1-commit.d0fcfb7f",
-    "@aztec/wallets": "0.0.1-commit.d0fcfb7f"
+    "@aztec/accounts": "4.1.0-nightly.20260318",
+    "@aztec/aztec.js": "4.1.0-nightly.20260318",
+    "@aztec/entrypoints": "4.1.0-nightly.20260318",
+    "@aztec/noir-contracts.js": "4.1.0-nightly.20260318",
+    "@aztec/pxe": "4.1.0-nightly.20260318",
+    "@aztec/stdlib": "4.1.0-nightly.20260318",
+    "@aztec/wallets": "4.1.0-nightly.20260318"
   },
   "devDependencies": {
     "@types/node": "25.0.10",
@@ -35,7 +35,7 @@
     "vitest": "4.0.17"
   },
   "config": {
-    "aztecVersion": "0.0.1-commit.d0fcfb7f"
+    "aztecVersion": "4.1.0-nightly.20260318"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "engines": {
