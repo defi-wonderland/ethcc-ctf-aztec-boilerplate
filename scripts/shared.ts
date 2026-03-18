@@ -56,10 +56,7 @@ export async function createPlayerContext(
   opts: WalletContextOptions = {},
 ): Promise<PlayerContext> {
   const { wallet, node } = await createWalletContext(opts);
-  const account = await wallet.createSchnorrAccount(
-    getSecretKey(),
-    Fr.ZERO,
-  );
+  const account = await wallet.createSchnorrAccount(getSecretKey(), Fr.ZERO);
   const sponsoredFpcAddress = await registerSponsoredFPC(wallet);
   return {
     wallet,
