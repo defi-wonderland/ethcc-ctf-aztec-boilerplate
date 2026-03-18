@@ -33,7 +33,6 @@ async function main() {
     EasyFlagCaptureContractArtifact,
     {
       constructorArgs: [FLAG_EMITTER_ADDRESS],
-      deployer: AztecAddress.ZERO,
       salt: Fr.ZERO,
     },
   );
