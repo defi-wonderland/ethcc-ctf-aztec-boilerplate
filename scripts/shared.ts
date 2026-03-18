@@ -67,10 +67,14 @@ export async function createPlayerContext(
   };
 }
 
+export function getFlagEmitterAddress(): AztecAddress {
+  const address = process.env.FLAG_EMITTER_ADDRESS;
+  if (!address) throw new Error("FLAG_EMITTER_ADDRESS is not set");
+  return AztecAddress.fromString(address);
+}
+
 // Same address across all challenges on this network.
-export const FLAG_EMITTER_ADDRESS = AztecAddress.fromString(
-  "0x22fc626b2892e592df7fca7ab00b73a614b25f79d6af37f8b98154451baef9af",
-);
+export const FLAG_EMITTER_ADDRESS = getFlagEmitterAddress();
 
 export async function isChallengeCaptured(
   wallet: Wallet,

@@ -73,6 +73,7 @@ Copy `.env.example` to `.env`.
 
 - `SPONSORED_FPC_SALT`: Sponsored FPC salt used by the testnet scripts
 - `ACCOUNT_SECRET_KEY`: private key for your CTF account on testnet
+- `FLAG_EMITTER_ADDRESS`: address of the shared `FlagEmitter` contract on testnet
 - `TESTNET_NODE_URL` `(*)`: testnet RPC URL used by scripts. Defaults to Aztec public testnet RPC.
 - `LOCAL_NETWORK_NODE_URL` `(*)`: local network RPC URL used by tests. Defaults to `http://localhost:8080`.
 
