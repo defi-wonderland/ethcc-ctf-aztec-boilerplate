@@ -27,7 +27,7 @@ VERSION=$(node -p "require('./package.json').config.aztecVersion") && \
 Or install a specific version directly:
 
 ```bash
-bash -i <(curl -sL https://install.aztec.network/4.1.0-nightly.20260318)
+bash -i <(curl -sL https://install.aztec.network/4.2.0-aztecnr-rc.2)
 ```
 
 After installation, verify the tools are on your `PATH`:
@@ -35,6 +35,16 @@ After installation, verify the tools are on your `PATH`:
 ```bash
 aztec --version
 ```
+
+#### Known issues (Aztec CLI install)
+
+If installation fails or the CLI ends up in a broken state, remove Aztec’s cache directory under your home folder and run the install script again:
+
+```bash
+rm -rf ~/.aztec
+```
+
+Then repeat the [install steps](#install-the-aztec-cli) above.
 
 ### Install JS dependencies
 
