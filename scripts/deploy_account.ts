@@ -6,7 +6,7 @@
  *   cp .env.example .env   # fill in ACCOUNT_SECRET_KEY
  *   yarn deploy-account
  */
-import { AztecAddress } from "@aztec/aztec.js/addresses";
+import { NO_FROM } from "@aztec/aztec.js/account";
 import { SponsoredFeePaymentMethod } from "@aztec/aztec.js/fee";
 
 import { TESTNET_GAS_SETTINGS, createPlayerContext } from "./shared.js";
@@ -20,7 +20,7 @@ async function main() {
   const paymentMethod = new SponsoredFeePaymentMethod(sponsoredFpcAddress);
   const deployMethod = await account.getDeployMethod();
   await deployMethod.send({
-    from: AztecAddress.ZERO,
+    from: NO_FROM,
     fee: { paymentMethod, gasSettings: TESTNET_GAS_SETTINGS },
   });
 
