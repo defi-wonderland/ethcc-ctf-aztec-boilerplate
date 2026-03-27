@@ -3,6 +3,7 @@ target/
 src/artifacts/
 .DS_Store
 codegenCache.json
+tsconfig.tsbuildinfo
 .env
 .cache
 pxe-*/
