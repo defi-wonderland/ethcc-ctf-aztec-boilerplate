@@ -114,14 +114,17 @@ export async function registerSponsoredFPC(
 }
 
 /**
- * Explicit testnet gas settings.
- * The default SponsoredFeePaymentMethod returns undefined gas settings, which means
- * zero priority fee — the tx stalls in the mempool indefinitely. Always pass these
- * explicitly when sending transactions on testnet.
- *
- * Testnet base fee (L2): ~2.5 trillion FJ/gas (as of 2026-03).
+ * Builds dynamic testnet gas settings from the node's current minimum fees.
+ * We set `maxPriorityFeesPerGas` equal to `maxFeesPerGas` so sponsored
+ * transactions stay aggressively priceable on busy testnet conditions.
  */
-export const TESTNET_GAS_SETTINGS = GasSettings.default({
-  maxFeesPerGas: new GasFees(1_000_000n, 25_000_000_000_000n),
-  maxPriorityFeesPerGas: new GasFees(1_000n, 5_000_000_000_000n),
-});
+export async function getDynamicTestnetGasSettings(
+  node: ReturnType<typeof createAztecNodeClient>,
+): Promise<GasSettings> {
+  const currentMinFees = await node.getCurrentMinFees();
+  const maxFeesPerGas = currentMinFees.mul(2n);
+  return GasSettings.default({
+    maxFeesPerGas,
+    maxPriorityFeesPerGas: maxFeesPerGas,
+  });
+}
