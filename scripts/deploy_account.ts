@@ -9,19 +9,20 @@
 import { NO_FROM } from "@aztec/aztec.js/account";
 import { SponsoredFeePaymentMethod } from "@aztec/aztec.js/fee";
 
-import { TESTNET_GAS_SETTINGS, createPlayerContext } from "./shared.js";
+import { createPlayerContext, getDynamicTestnetGasSettings } from "./shared.js";
 
 async function main() {
-  const { account, sponsoredFpcAddress } = await createPlayerContext();
+  const { account, node, sponsoredFpcAddress } = await createPlayerContext();
 
   const address = account.address;
   console.log(`Deploying account ${address.toString()} ...`);
 
   const paymentMethod = new SponsoredFeePaymentMethod(sponsoredFpcAddress);
+  const gasSettings = await getDynamicTestnetGasSettings(node);
   const deployMethod = await account.getDeployMethod();
   await deployMethod.send({
     from: NO_FROM,
-    fee: { paymentMethod, gasSettings: TESTNET_GAS_SETTINGS },
+    fee: { paymentMethod, gasSettings },
   });
 
   console.log(`Deployed account ${address.toString()}`);

@@ -11,7 +11,6 @@
  */
 import { Fr } from "@aztec/aztec.js/fields";
 import { SponsoredFeePaymentMethod } from "@aztec/aztec.js/fee";
-import { AztecAddress } from "@aztec/aztec.js/addresses";
 import { getContractInstanceFromInstantiationParams } from "@aztec/stdlib/contract";
 
 import {
@@ -20,13 +19,14 @@ import {
 } from "../src/artifacts/EasyFlagCapture.js";
 import {
   FLAG_EMITTER_ADDRESS,
-  TESTNET_GAS_SETTINGS,
   createPlayerContext,
+  getDynamicTestnetGasSettings,
   isChallengeCaptured,
 } from "./shared.js";
 
 async function main() {
-  const { wallet, player, sponsoredFpcAddress } = await createPlayerContext();
+  const { wallet, node, player, sponsoredFpcAddress } =
+    await createPlayerContext();
 
   // Infer the shared challenge instance from its deployment parameters.
   const challengeInstance = await getContractInstanceFromInstantiationParams(
@@ -50,10 +50,11 @@ async function main() {
   console.log(`easy flag = ${challengeAddress.toString()}`);
 
   const paymentMethod = new SponsoredFeePaymentMethod(sponsoredFpcAddress);
+  const gasSettings = await getDynamicTestnetGasSettings(node);
 
   await challenge.methods.capture_flag().send({
     from: player,
-    fee: { paymentMethod, gasSettings: TESTNET_GAS_SETTINGS },
+    fee: { paymentMethod, gasSettings },
   });
 
   const captured = await isChallengeCaptured(wallet, challengeAddress, player);
